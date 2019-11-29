@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookSearch from "./BookSearch";
 import BookList from "./BookList";
@@ -14,20 +14,20 @@ class BooksApp extends React.Component {
     this.updateData()
   }
 
-  //To handle shelf change
+  // handle shelf change
   updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(response => {
       this.updateData()
     })
   }
 
-  //To update the book in state
+  // Updates book in state
   updateData = () => {
     BooksAPI.getAll().then(data => {
-            this.setState({
-              books: data
-            })
-    });    
+      this.setState({
+        books: data
+      })
+    });
   }
 
   render() {
@@ -35,9 +35,9 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/" render={() => <BookList currentBooks={this.state.books} />} />
         <Route
-        path="/search"
-        render={() =>
-        <BookSearch updateShelf={this.updateShelf} currentBooks={this.state.books} />}/>
+          path="/search"
+          render={() =>
+            <BookSearch updateShelf={this.updateShelf} currentBooks={this.state.books} />} />
       </div>
     );
   }

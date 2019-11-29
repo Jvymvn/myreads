@@ -4,21 +4,14 @@ import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 
 class BookSearch extends React.Component {
-
   constructor() {
     super();
     this.state = {
-    query: "",
-    books: []
+      query: "",
+      books: []
     }
   }
 
-  /* 
-  	Update the shelf for each book, 
-  	none if the book is not on any shelf and 
-  	if the id book founds on book shelf 
-  	then set the current book shelf
-  */
   updateData = (books) => {
     const cBooks = books.map(book => {
       //Check where is the book ?
@@ -35,26 +28,25 @@ class BookSearch extends React.Component {
     })
   }
 
-  /* 
-  	Read the query when the user types on and display 20 books by calling search method on BookAPI.js
-  */
+
+  //	Read the query when the user types on and display 20 books by calling search method on BookAPI.js
+
   updateQuery = (query) => {
     this.setState({ query: query })
     if (query) {
       BooksAPI.search(query, 20).then((books) => {
-        books.length > 0 ? this.updateData(books):this.setState({books:[]})
-      }).catch((e)=> {
-      console.error(`The API responded with an error: ${e}`);
-    })
+        books.length > 0 ? this.updateData(books) : this.setState({ books: [] })
+      }).catch((e) => {
+        console.error(`The API responded with an error: ${e}`);
+      })
     }
-    else
-    {this.setState({books:[]})} //With any errors
+    else { this.setState({ books: [] }) } //With any errors
   }
 
-  /* 
-  	Update the shelf when book shelf changer button is clicked and the shelf changed
-  */
-  updateBooks = (book, shelf)=> {
+
+  // Update the shelf when book shelf changer button is clicked and the shelf changed
+
+  updateBooks = (book, shelf) => {
     let current = this.state.books;
     const bookToUpdate = current.filter(cBook => cBook.id === book.id)[0];
     bookToUpdate.shelf = shelf;
